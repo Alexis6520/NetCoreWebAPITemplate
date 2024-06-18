@@ -27,7 +27,9 @@ namespace Services.Repositories
         /// <summary>
         /// Obtiene todas las entidades que coinciden con el filtro proporcionado
         /// </summary>
-        /// <param name="filter">Filtro (Opcional)</param>
+        /// <param name="filter">Filtro</param>
+        /// <param name="includeProperties">Propiedades a incluir en la consulta</param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>>? filter = null, string includeProperties = "", CancellationToken cancellationToken = default);
 

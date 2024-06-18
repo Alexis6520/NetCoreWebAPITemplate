@@ -1,9 +1,11 @@
 ﻿using Infrastructure.Persistence;
 using Infrastructure.Services;
+using Infrastructure.Services.Queries;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Services;
+using Services.Queries;
 
 namespace Infrastructure
 {
@@ -23,6 +25,8 @@ namespace Infrastructure
             });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddAutoMapper(typeof(IUnitOfWork).Assembly);
+            services.AddTransient<IDonutQueryService, DonutQueryService>();
             return services;
         }
     }
