@@ -51,5 +51,19 @@ namespace WebAPI.Controllers
             var result = _queryService.GetById(id);
             return CustomResult(result);
         }
+
+        /// <summary>
+        /// Actualiza una dona
+        /// </summary>
+        /// <param name="id">Id de dona</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsync(int id, DonutUpdateCommand command, CancellationToken cancellationToken = default)
+        {
+            command.Id = id;
+            var result = await _mediator.Send(command, cancellationToken);
+            return CustomResult(result);
+        }
     }
 }

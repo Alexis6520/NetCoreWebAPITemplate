@@ -12,5 +12,10 @@ namespace WebAPI.Controllers
             var body = result.Succeeded ? null : result;
             return StatusCode((int)result.StatusCode, body);
         }
+
+        protected ObjectResult CustomResult<T>(Result<T> result)
+        {
+            return StatusCode((int)result.StatusCode, result);
+        }
     }
 }
