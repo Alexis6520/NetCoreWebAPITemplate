@@ -59,10 +59,25 @@ namespace WebAPI.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> UpdateAsync(int id, DonutUpdateCommand command, CancellationToken cancellationToken = default)
         {
             command.Id = id;
             var result = await _mediator.Send(command, cancellationToken);
+            return CustomResult(result);
+        }
+
+        /// <summary>
+        /// Elimina una dona
+        /// </summary>
+        /// <param name="id">Id de dona</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var result = await _mediator.Send(new DonutDeleteCommand(id), cancellationToken);
             return CustomResult(result);
         }
     }
