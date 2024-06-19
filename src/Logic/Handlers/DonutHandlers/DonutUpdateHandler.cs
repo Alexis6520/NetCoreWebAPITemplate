@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Logging;
 using Services;
 using Services.Wrappers;
 using System.Net;
@@ -17,9 +18,10 @@ namespace Logic.Handlers.DonutHandlers
         public decimal Price { get; set; }
     }
 
-    public class DonutUpdateHandler(IUnitOfWork unitOfWork) : IRequestHandler<DonutUpdateCommand, Result>
+    public class DonutUpdateHandler(IUnitOfWork unitOfWork, ILogger<DonutUpdateHandler> logger) : IRequestHandler<DonutUpdateCommand, Result>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        private readonly ILogger<DonutUpdateHandler> _logger = logger;
 
         public async Task<Result> Handle(DonutUpdateCommand request, CancellationToken cancellationToken)
         {
@@ -33,6 +35,7 @@ namespace Logic.Handlers.DonutHandlers
             donut.Name = request.Name;
             donut.Price = request.Price;
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+            _logger.LogInformation("Dona {id} actualizada", donut.Id);
             return Result.Success(HttpStatusCode.NoContent);
         }
     }
