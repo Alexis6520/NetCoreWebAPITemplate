@@ -4,6 +4,11 @@ using System.Text.Json;
 
 namespace WebAPI.Middlewares
 {
+    /// <summary>
+    /// Manejador de errores
+    /// </summary>
+    /// <param name="requestDelegate"></param>
+    /// <param name="logger"></param>
     public class ErrorHandlerMiddleware(RequestDelegate requestDelegate, ILogger<ErrorHandlerMiddleware> logger)
     {
         private readonly RequestDelegate _requestDelegate = requestDelegate;

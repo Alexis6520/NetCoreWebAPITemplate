@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using Logic.Behaviors;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace Logic
@@ -17,6 +20,8 @@ namespace Logic
         {
             var assembly = Assembly.GetExecutingAssembly();
             services.AddMediatR(config => config.RegisterServicesFromAssembly(assembly));
+            services.AddValidatorsFromAssembly(assembly);
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             return services;
         }
     }
