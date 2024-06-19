@@ -13,7 +13,8 @@ try
     // Add services to the container.
     builder.Services
         .AddInfrastructure(builder.Configuration)
-        .AddLogic();
+        .AddLogic()
+        .AddSwagger();
 
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();

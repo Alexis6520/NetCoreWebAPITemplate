@@ -56,6 +56,7 @@ namespace WebAPI.Controllers
         /// Actualiza una dona
         /// </summary>
         /// <param name="id">Id de dona</param>
+        /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
