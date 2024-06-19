@@ -25,6 +25,7 @@ namespace Logic.Handlers.DonutHandlers
 
         public async Task<Result> Handle(DonutCreateCommand request, CancellationToken cancellationToken)
         {
+            throw new Exception("Error de prueba");
             var donut = new Donut(request.Name, request.Price);
             await _unitOfWork.Donuts.AddAsync(donut, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);

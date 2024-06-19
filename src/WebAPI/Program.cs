@@ -3,6 +3,7 @@ using Logic;
 using NLog;
 using NLog.Web;
 using WebAPI;
+using WebAPI.Middlewares;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +31,7 @@ try
         app.UseSwaggerUI();
     }
 
+    app.UseMiddleware<ErrorHandlerMiddleware>();
     app.UseMiddleware<NLogRequestPostedBodyMiddleware>(new NLogRequestPostedBodyMiddlewareOptions());
     app.UseHttpsRedirection();
     app.UseAuthorization();
