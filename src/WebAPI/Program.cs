@@ -37,7 +37,7 @@ try
     app.UseHttpsRedirection();
     app.UseAuthorization();
     app.MapControllers();
-    app.InitializeDatabase();
+    //app.InitializeDatabase();
     app.Run();
 }
 catch (Exception ex)

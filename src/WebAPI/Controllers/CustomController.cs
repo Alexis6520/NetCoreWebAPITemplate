@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Services.Wrappers;
 
 namespace WebAPI.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public abstract class CustomController : ControllerBase
