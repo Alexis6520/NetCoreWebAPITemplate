@@ -14,7 +14,8 @@ try
     builder.Services
         .AddInfrastructure(builder.Configuration)
         .AddLogic()
-        .AddSwagger();
+        .AddSwagger()
+        .AddAuthentication(builder.Configuration);
 
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
