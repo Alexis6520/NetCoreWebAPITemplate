@@ -3,6 +3,9 @@ using Services.Repositories;
 
 namespace Services
 {
+    /// <summary>
+    /// Unidad de trabajo de acceso a la persistencia para servicios de lógica de negocio
+    /// </summary>
     public interface IUnitOfWork
     {
         /// <summary>

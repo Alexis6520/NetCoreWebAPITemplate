@@ -60,6 +60,10 @@ namespace Services.Wrappers
         }
     }
 
+    /// <summary>
+    /// Representa el resultado de una operación que devuelve un valor
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class Result<T> : Result
     {
         public Result(bool succeeded, HttpStatusCode statusCode, IEnumerable<string>? errors = null) : base(succeeded, statusCode, errors)

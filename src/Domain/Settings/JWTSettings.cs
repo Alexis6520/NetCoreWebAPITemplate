@@ -16,7 +16,7 @@
         public string ValidIssuer { get; set; } = "";
 
         /// <summary>
-        /// IP/DNS de las aplicaciones válidas a usar los Token
+        /// Nombres de audiencias permitidas
         /// </summary>
         public IEnumerable<string> ValidAudiences { get; set; } = [];
     }
