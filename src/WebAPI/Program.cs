@@ -33,12 +33,13 @@ try
         app.UseSwaggerUI();
     }
 
-    app.UseMiddleware<ErrorHandlerMiddleware>();
     app.UseMiddleware<NLogRequestPostedBodyMiddleware>(new NLogRequestPostedBodyMiddlewareOptions());
+    app.UseMiddleware<ErrorHandlerMiddleware>();
     app.UseHttpsRedirection();
+    app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();
-    //app.InitializeDatabase();
+    app.InitializeDatabase();
     app.Run();
 }
 catch (Exception ex)
@@ -50,3 +51,5 @@ finally
 {
     LogManager.Shutdown();
 }
+
+public partial class Program { }

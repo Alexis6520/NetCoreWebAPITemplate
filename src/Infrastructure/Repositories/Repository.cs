@@ -43,5 +43,10 @@ namespace Infrastructure.Repositories
         {
             _dbSet.Remove(entity);
         }
+
+        public virtual void RemoveRange(IEnumerable<TEntity> entities)
+        {
+            _dbSet.RemoveRange(entities);
+        }
     }
 }

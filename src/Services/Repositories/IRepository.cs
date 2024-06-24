@@ -36,7 +36,13 @@ namespace Services.Repositories
         /// <summary>
         /// Elimina una entidad del contexto
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="entity">Entidad a eliminar</param>
         void Remove(TEntity entity);
+
+        /// <summary>
+        /// Elimina una serie de entidades del contexto
+        /// </summary>
+        /// <param name="entities">Entidades a eliminar</param>
+        void RemoveRange(IEnumerable<TEntity> entities);
     }
 }
