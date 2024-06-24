@@ -22,11 +22,7 @@ namespace IntegrationTests
             using var dbContext = scope.ServiceProvider
                 .GetRequiredService<ApplicationDbContext>();
 
-            await CreateDonutAsync();
-
-            var id = await dbContext.Donuts
-                .Select(x => x.Id)
-                .FirstAsync();
+            var id = await CreateDonutAsync();
 
             // Actualizar por medio de la API
             var command = new DonutUpdateCommand
@@ -48,12 +44,14 @@ namespace IntegrationTests
             Assert.Equal(command.Price, donut.Price);
         }
 
-        private async Task CreateDonutAsync()
+        private async Task<int> CreateDonutAsync()
         {
             // Ejecutar
             var command = new DonutCreateCommand("Frambuesa", 19);
             var response = await _client.PostAsJsonAsync(Url, command);
             response.EnsureSuccessStatusCode();
+            var result = await response.Content.ReadFromJsonAsync<Result<int>>();
+            Assert.NotNull(result);
 
             // Comprobar que la dona esté en la base de datos 
             using var scope = _factory.Services.CreateScope();
@@ -62,9 +60,10 @@ namespace IntegrationTests
                 .GetRequiredService<ApplicationDbContext>();
 
             var exists = await dbContext.Donuts
-                .AnyAsync(x => x.Name == command.Name);
+                .AnyAsync(x => x.Id == result.Value);
 
             Assert.True(exists);
+            return result.Value;
         }
 
         [Fact]
@@ -91,20 +90,29 @@ namespace IntegrationTests
         [Fact]
         public async Task GetById()
         {
+            var id = await CreateDonutAsync();
+            var result = await _client.GetFromJsonAsync<Result<DonutDTO>>($"{Url}/{id}");
+            Assert.NotNull(result);
+            Assert.NotNull(result.Value);
+        }
+
+        [Fact]
+        public async Task Delete()
+        {
+            var id = await CreateDonutAsync();
             using var scope = _factory.Services.CreateScope();
 
             using var dbContext = scope.ServiceProvider
                 .GetRequiredService<ApplicationDbContext>();
 
-            await CreateDonutAsync();
+            var url = $"{Url}/{id}";
+            var response = await _client.DeleteAsync(url);
+            response.EnsureSuccessStatusCode();
 
-            var id = await dbContext.Donuts
-                .Select(x => x.Id)
-                .FirstAsync();
+            var exists = await dbContext.Donuts
+                .AnyAsync(x => x.Id == id);
 
-            var result = await _client.GetFromJsonAsync<Result<DonutDTO>>($"{Url}/{id}");
-            Assert.NotNull(result);
-            Assert.NotNull(result.Value);
+            Assert.False(exists);
         }
     }
 }

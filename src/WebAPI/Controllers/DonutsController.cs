@@ -20,7 +20,7 @@ namespace WebAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> CreateAsync(DonutCreateCommand command, CancellationToken cancellationToken = default)
+        public async Task<ActionResult<Result<int>>> CreateAsync(DonutCreateCommand command, CancellationToken cancellationToken = default)
         {
             var result = await _mediator.Send(command, cancellationToken);
             return CustomResult(result);
