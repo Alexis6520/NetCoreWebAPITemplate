@@ -66,6 +66,10 @@ namespace Services.Wrappers
     /// <typeparam name="T"></typeparam>
     public class Result<T> : Result
     {
+        public Result() : base(true, HttpStatusCode.OK)
+        {
+        }
+
         public Result(bool succeeded, HttpStatusCode statusCode, IEnumerable<string>? errors = null) : base(succeeded, statusCode, errors)
         {
         }

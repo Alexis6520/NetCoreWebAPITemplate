@@ -87,5 +87,24 @@ namespace IntegrationTests
                 Assert.Equal(0, result.PageCount);
             }
         }
+
+        [Fact]
+        public async Task GetById()
+        {
+            using var scope = _factory.Services.CreateScope();
+
+            using var dbContext = scope.ServiceProvider
+                .GetRequiredService<ApplicationDbContext>();
+
+            await CreateDonutAsync();
+
+            var id = await dbContext.Donuts
+                .Select(x => x.Id)
+                .FirstAsync();
+
+            var result = await _client.GetFromJsonAsync<Result<DonutDTO>>($"{Url}/{id}");
+            Assert.NotNull(result);
+            Assert.NotNull(result.Value);
+        }
     }
 }
