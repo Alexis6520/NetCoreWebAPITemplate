@@ -12,17 +12,17 @@ namespace IntegrationTests
     public class DonutTest(CustomWebAppFactory factory) : BaseTest(factory)
     {
         private const string Url = "Donuts";
+        private int _id;
 
         [Fact]
         public async Task UpdateDonut()
         {
             // Crear dona con la que se probará la actualización
+            await CreateDonutAsync();
             using var scope = _factory.Services.CreateScope();
 
             using var dbContext = scope.ServiceProvider
                 .GetRequiredService<ApplicationDbContext>();
-
-            var id = await CreateDonutAsync();
 
             // Actualizar por medio de la API
             var command = new DonutUpdateCommand
@@ -31,20 +31,20 @@ namespace IntegrationTests
                 Price = 10
             };
 
-            var url = $"{Url}/{id}";
+            var url = $"{Url}/{_id}";
             var response = await _client.PutAsJsonAsync(url, command);
             response.EnsureSuccessStatusCode();
 
             // Recuperar dona y comprobar que se haya actualizado
             var donut = await dbContext.Donuts
-                .FindAsync(id);
+                .FindAsync(_id);
 
             Assert.NotNull(donut);
             Assert.Equal(command.Name, donut.Name);
             Assert.Equal(command.Price, donut.Price);
         }
 
-        private async Task<int> CreateDonutAsync()
+        private async Task CreateDonutAsync()
         {
             // Ejecutar
             var command = new DonutCreateCommand("Frambuesa", 19);
@@ -63,7 +63,7 @@ namespace IntegrationTests
                 .AnyAsync(x => x.Id == result.Value);
 
             Assert.True(exists);
-            return result.Value;
+            _id = result.Value;
         }
 
         [Fact]
@@ -90,8 +90,8 @@ namespace IntegrationTests
         [Fact]
         public async Task GetById()
         {
-            var id = await CreateDonutAsync();
-            var result = await _client.GetFromJsonAsync<Result<DonutDTO>>($"{Url}/{id}");
+            await CreateDonutAsync();
+            var result = await _client.GetFromJsonAsync<Result<DonutDTO>>($"{Url}/{_id}");
             Assert.NotNull(result);
             Assert.NotNull(result.Value);
         }
@@ -99,20 +99,42 @@ namespace IntegrationTests
         [Fact]
         public async Task Delete()
         {
-            var id = await CreateDonutAsync();
+            await CreateDonutAsync();
             using var scope = _factory.Services.CreateScope();
 
             using var dbContext = scope.ServiceProvider
                 .GetRequiredService<ApplicationDbContext>();
 
-            var url = $"{Url}/{id}";
+            var url = $"{Url}/{_id}";
             var response = await _client.DeleteAsync(url);
             response.EnsureSuccessStatusCode();
 
             var exists = await dbContext.Donuts
-                .AnyAsync(x => x.Id == id);
+                .AnyAsync(x => x.Id == _id);
 
             Assert.False(exists);
+        }
+
+        public override void Dispose()
+        {
+            if (_id > 0)
+            {
+                using var scope = _factory.Services.CreateScope();
+
+                using var dbContext = scope.ServiceProvider
+                    .GetRequiredService<ApplicationDbContext>();
+
+                var donut = dbContext.Donuts
+                    .Find(_id);
+
+                if (donut != null)
+                {
+                    dbContext.Donuts.Remove(donut);
+                    dbContext.SaveChanges();
+                }
+            }
+
+            base.Dispose();
         }
     }
 }
