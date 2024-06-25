@@ -135,6 +135,7 @@ namespace IntegrationTests
             }
 
             base.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }
