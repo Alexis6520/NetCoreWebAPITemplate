@@ -65,7 +65,7 @@ namespace WebAPI
         /// <param name="configuration"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddJWTAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             var settings = configuration.GetSection(nameof(JWTSettings)).Get<JWTSettings>();
             _ = settings ?? throw new Exception("No se pudo obtener la configuración de autenticación");

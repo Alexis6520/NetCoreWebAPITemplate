@@ -15,7 +15,7 @@ try
         .AddInfrastructure(builder.Configuration)
         .AddLogic()
         .AddSwagger()
-        .AddAuthentication(builder.Configuration);
+        .AddJWTAuthentication(builder.Configuration);
 
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();

@@ -14,7 +14,7 @@ namespace IntegrationTests.Services
     /// </summary>
     public class CustomWebAppFactory : WebApplicationFactory<Program>
     {
-        public const string ConnectionString = "Server=10.10.50.5;Database=NetCoreWebAPITemplateTest;User=sa;Password=@dministrator1;TrustServerCertificate=True;";
+        public const string ConnectionString = "Server=BATICOMPUTADORA;Database=NetCoreWebAPITemplateTest;Trusted_Connection=True;TrustServerCertificate=True;";
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
