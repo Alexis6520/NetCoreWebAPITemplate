@@ -17,12 +17,12 @@ namespace Infrastructure.Repositories
             await _dbSet.AddAsync(entity, cancellationToken);
         }
 
-        public virtual async Task<TEntity?> FindAsync(object[] keys, CancellationToken cancellationToken = default)
+        public virtual async Task<TEntity> FindAsync(object[] keys, CancellationToken cancellationToken = default)
         {
             return await _dbSet.FindAsync(keys, cancellationToken);
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>>? filter = null, string includeProperties = "", CancellationToken cancellationToken = default)
+        public virtual async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, string includeProperties = "", CancellationToken cancellationToken = default)
         {
             IQueryable<TEntity> query = _dbSet;
 

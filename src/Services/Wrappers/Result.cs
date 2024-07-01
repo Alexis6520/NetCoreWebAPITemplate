@@ -9,7 +9,7 @@ namespace Services.Wrappers
     /// <param name="succeeded"></param>
     /// <param name="statusCode"></param>
     /// <param name="errors"></param>
-    public class Result(bool succeeded, HttpStatusCode statusCode, IEnumerable<string>? errors = null)
+    public class Result(bool succeeded, HttpStatusCode statusCode, IEnumerable<string> errors = null)
     {
         /// <summary>
         /// Indica si la operación fue exitosa
@@ -27,7 +27,7 @@ namespace Services.Wrappers
         /// Mensajes de error a mostrar al cliente
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public IEnumerable<string>? Errors { get; set; } = errors;
+        public IEnumerable<string> Errors { get; set; } = errors;
 
         /// <summary>
         /// Devuelve un resultado exitoso
@@ -70,11 +70,11 @@ namespace Services.Wrappers
         {
         }
 
-        public Result(bool succeeded, HttpStatusCode statusCode, IEnumerable<string>? errors = null) : base(succeeded, statusCode, errors)
+        public Result(bool succeeded, HttpStatusCode statusCode, IEnumerable<string> errors = null) : base(succeeded, statusCode, errors)
         {
         }
 
-        public Result(T value, bool succeeded, HttpStatusCode statusCode, IEnumerable<string>? errors = null) : base(succeeded, statusCode, errors)
+        public Result(T value, bool succeeded, HttpStatusCode statusCode, IEnumerable<string> errors = null) : base(succeeded, statusCode, errors)
         {
             Value = value;
         }
@@ -83,7 +83,7 @@ namespace Services.Wrappers
         /// Valor devuelto por este resultado
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public T? Value { get; set; }
+        public T Value { get; set; }
 
         /// <summary>
         /// Devuelve un resultado exitoso

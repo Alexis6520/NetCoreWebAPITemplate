@@ -42,7 +42,7 @@ namespace UnitTests.DonutTests
         public async Task DeleteNonExistentDonut()
         {
             // Configurar UnitOfwork
-            Donut? donut = null;
+            Donut donut = null;
 
             _unitOfWorkMock.Setup(x => x.Donuts.FindAsync(It.IsAny<object[]>(), default))
                 .ReturnsAsync(donut);
