@@ -9,7 +9,7 @@ namespace Infrastructure.Services
     public class UnitOfWork(ApplicationDbContext dbContext) : IUnitOfWork
     {
         private readonly ApplicationDbContext _dbContext = dbContext;
-        private IRepository<Donut>? _donuts;
+        private IRepository<Donut> _donuts;
 
         public IRepository<Donut> Donuts => _donuts ??= new Repository<Donut>(_dbContext.Donuts);
 
