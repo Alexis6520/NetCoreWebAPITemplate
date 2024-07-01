@@ -72,7 +72,7 @@ namespace UnitTests.DonutTests
         {
             // Configurar UnitOfWork
             _unitOfWorkMock.Setup(x => x.Donuts.FindAsync(It.IsAny<object[]>(), default))
-                .Returns(Task.FromResult<Donut?>(null));
+                .Returns(Task.FromResult<Donut>(null));
 
             // Simular operación
             var command = new DonutUpdateCommand();

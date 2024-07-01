@@ -22,7 +22,7 @@ namespace Services.Repositories
         /// <param name="keys">Identificadores</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<TEntity?> FindAsync(object[] keys, CancellationToken cancellationToken = default);
+        Task<TEntity> FindAsync(object[] keys, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Obtiene todas las entidades que coinciden con el filtro proporcionado
@@ -31,7 +31,7 @@ namespace Services.Repositories
         /// <param name="includeProperties">Propiedades a incluir en la consulta</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>>? filter = null, string includeProperties = "", CancellationToken cancellationToken = default);
+        Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, string includeProperties = "", CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Elimina una entidad del contexto

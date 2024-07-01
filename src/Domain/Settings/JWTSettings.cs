@@ -8,16 +8,16 @@
         /// <summary>
         /// Clave secreta de encriptado
         /// </summary>
-        public string SecretKey { get; set; } = "";
+        public string SecretKey { get; set; }
 
         /// <summary>
         /// IP/DNS del emisor del Token
         /// </summary>
-        public string ValidIssuer { get; set; } = "";
+        public string ValidIssuer { get; set; }
 
         /// <summary>
         /// Nombres de audiencias permitidas
         /// </summary>
-        public IEnumerable<string> ValidAudiences { get; set; } = [];
+        public IEnumerable<string> ValidAudiences { get; set; }
     }
 }
