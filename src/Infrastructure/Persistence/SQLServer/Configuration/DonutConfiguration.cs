@@ -15,6 +15,9 @@ namespace Infrastructure.Persistence.SQLServer.Configuration
 
             builder.Property(x => x.Price)
                 .HasColumnType("decimal(6,2)");
+
+            builder.Property(x => x.Description)
+                .HasMaxLength(512);
         }
     }
 }

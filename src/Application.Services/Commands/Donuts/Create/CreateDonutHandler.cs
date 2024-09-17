@@ -12,7 +12,11 @@ namespace Application.Services.Commands.Donuts.Create
 
         public async Task<Response<int>> Handle(CreateDonutCommand request, CancellationToken cancellationToken)
         {
-            var donut = new Donut(request.Name, request.Price);
+            var donut = new Donut(request.Name, request.Price)
+            {
+                Description = request.Description,
+            };
+
             await _dbContext.Donuts.AddAsync(donut, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Response<int>.Success(donut.Id, HttpStatusCode.Created);

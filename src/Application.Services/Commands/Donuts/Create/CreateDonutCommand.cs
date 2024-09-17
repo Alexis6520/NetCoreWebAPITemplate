@@ -18,5 +18,10 @@ namespace Application.Services.Commands.Donuts.Create
         /// Precio de la dona
         /// </summary>
         public decimal Price { get; set; } = price;
+
+        /// <summary>
+        /// Descripción de la dona
+        /// </summary>
+        public string? Description { get; set; }
     }
 }

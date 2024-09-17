@@ -18,6 +18,11 @@
         public string Name { get; set; } = name;
 
         /// <summary>
+        /// Descripción de la dona
+        /// </summary>
+        public string? Description { get; set; }
+
+        /// <summary>
         /// Precio de la dona
         /// </summary>
         public decimal Price { get; set; } = price;

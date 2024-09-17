@@ -1,4 +1,6 @@
 ﻿using Application.Services.Commands.Donuts.Create;
+using Application.Services.DTOs.Donuts;
+using Application.Services.Queries.Donuts;
 using Application.Services.Wrappers;
 using Host.Abstractions;
 using MediatR;
@@ -13,6 +15,12 @@ namespace Host.Controllers
         public async Task<ActionResult<Response<int>>> Create(CreateDonutCommand command)
         {
             return CustomResponse(await Mediator.Send(command));
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<Response<List<DonutDTO>>>> GetAll()
+        {
+            return CustomResponse(await Mediator.Send(new GetDonutListQuery()));
         }
     }
 }
