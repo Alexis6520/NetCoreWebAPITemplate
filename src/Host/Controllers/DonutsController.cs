@@ -1,9 +1,11 @@
-﻿using Application.Services.Commands.Donuts.Create;
+﻿using Application.Services.Commands;
+using Application.Services.Commands.Donuts.Create;
 using Application.Services.Commands.Donuts.Update;
 using Application.Services.DTOs.Donuts;
 using Application.Services.Queries;
 using Application.Services.Queries.Donuts;
 using Application.Services.Wrappers;
+using Domain.Entities;
 using Host.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -37,6 +39,13 @@ namespace Host.Controllers
         {
             command.Id = id;
             return CustomResponse(await Mediator.Send(command));
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<ActionResult<Response<DonutDTO>>> Delete(int id)
+        {
+            return CustomResponse(await Mediator.Send(new DeleteCommand<int, Donut>(id)));
         }
     }
 }
