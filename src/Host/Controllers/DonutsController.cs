@@ -1,4 +1,5 @@
 ﻿using Application.Services.Commands.Donuts.Create;
+using Application.Services.Commands.Donuts.Update;
 using Application.Services.DTOs.Donuts;
 using Application.Services.Queries;
 using Application.Services.Queries.Donuts;
@@ -28,6 +29,14 @@ namespace Host.Controllers
         public async Task<ActionResult<Response<DonutDTO>>> Get(int id)
         {
             return CustomResponse(await Mediator.Send(new FindQuery<int, DonutDTO>(id)));
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> Update(int id, UpdateDonutCommand command)
+        {
+            command.Id = id;
+            return CustomResponse(await Mediator.Send(command));
         }
     }
 }
