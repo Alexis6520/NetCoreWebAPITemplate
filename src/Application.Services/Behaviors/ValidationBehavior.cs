@@ -27,12 +27,15 @@ namespace Application.Services.Behaviors
                 var errors = validationResults.Where(x => x.Errors.Count > 0)
                     .SelectMany(x => x.Errors);
 
-                var errorMsgs = errors.Select(x => x.ErrorMessage);
-                var response = Activator.CreateInstance<TResponse>();
-                response.Succeeded = false;
-                response.StatusCode = HttpStatusCode.BadRequest;
-                response.Errors = errorMsgs;
-                return response;
+                if (errors.Any())
+                {
+                    var errorMsgs = errors.Select(x => x.ErrorMessage);
+                    var response = Activator.CreateInstance<TResponse>();
+                    response.Succeeded = false;
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Errors = errorMsgs;
+                    return response;
+                }
             }
 
             return await next();
