@@ -1,4 +1,5 @@
 ﻿using Application.Services.Abstractions;
+using FluentValidation;
 using System.Text.Json.Serialization;
 
 namespace Application.Services.Commands.Donuts.Update
@@ -28,5 +29,21 @@ namespace Application.Services.Commands.Donuts.Update
         /// Nuevo precio
         /// </summary>
         public decimal Price { get; set; }
+    }
+
+    public class UpdateDonutValidator : AbstractValidator<UpdateDonutCommand>
+    {
+        public UpdateDonutValidator() 
+        {
+            RuleFor(x => x.Name)
+                .NotEmpty().WithMessage("El nombre es obligatorio")
+                .MaximumLength(30).WithMessage("El nombre no puede superar los {MaxLength} caracteres");
+
+            RuleFor(x => x.Price)
+                .GreaterThanOrEqualTo(0).WithMessage("No se admiten valores negativos");
+
+            RuleFor(x => x.Description)
+                .MaximumLength(512).WithMessage("La descripción no puede superar los {MaxLength} caracteres");
+        }
     }
 }

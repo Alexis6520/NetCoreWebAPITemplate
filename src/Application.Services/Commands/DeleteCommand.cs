@@ -8,8 +8,8 @@ namespace Application.Services.Commands
     /// <typeparam name="I">Tipo de Id</typeparam>
     /// <typeparam name="R">Tipo de recurso a eliminar</typeparam>
     /// <param name="id">Id de recurso a eliminar</param>
-    public class DeleteCommand<I, R>(int id) : IRequest where R : class
+    public class DeleteCommand<I, R>(I id) : IRequest where R : class
     {
-        public int Id { get; set; } = id;
+        public I Id { get; set; } = id;
     }
 }
