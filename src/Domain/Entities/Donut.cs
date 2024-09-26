@@ -20,7 +20,7 @@
         /// <summary>
         /// Descripción de la dona
         /// </summary>
-        public string? Description { get; set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// Precio de la dona

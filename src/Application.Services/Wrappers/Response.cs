@@ -24,7 +24,7 @@ namespace Application.Services.Wrappers
         /// Mensajes de error para el cliente
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public IEnumerable<string>? Errors { get; set; }
+        public IEnumerable<string> Errors { get; set; }
 
         /// <summary>
         /// Genera una respuesta exitosa
@@ -81,7 +81,7 @@ namespace Application.Services.Wrappers
         /// Valor devuelto
         /// </summary>
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public T? Value { get; set; }
+        public T Value { get; set; }
 
         /// <summary>
         /// Genera una respuesta exitosa

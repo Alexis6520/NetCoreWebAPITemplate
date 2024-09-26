@@ -11,7 +11,8 @@ namespace Infrastructure.Persistence.SQLServer.Configuration
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Name)
-                .HasMaxLength(30);
+                .HasMaxLength(30)
+                .IsRequired();
 
             builder.Property(x => x.Price)
                 .HasColumnType("decimal(6,2)");

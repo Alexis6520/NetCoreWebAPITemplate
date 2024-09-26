@@ -1,27 +1,42 @@
 ﻿using Application.Services.Abstractions;
+using FluentValidation;
 
 namespace Application.Services.Commands.Donuts.Create
 {
     /// <summary>
     /// Comando para crear una dona
     /// </summary>
-    /// <param name="name">Nombre de la dona</param>
-    /// <param name="price">Precio de la dona</param>
-    public class CreateDonutCommand(string name, decimal price) : IRequest<int>
+    public class CreateDonutCommand : IRequest<int>
     {
         /// <summary>
         /// Nombre de la dona
         /// </summary>
-        public string Name { get; set; } = name;
+        public string Name { get; set; }
 
         /// <summary>
         /// Precio de la dona
         /// </summary>
-        public decimal Price { get; set; } = price;
+        public decimal Price { get; set; }
 
         /// <summary>
         /// Descripción de la dona
         /// </summary>
-        public string? Description { get; set; }
+        public string Description { get; set; }
+    }
+
+    public class CreateDonutValidator : AbstractValidator<CreateDonutCommand>
+    {
+        public CreateDonutValidator() 
+        {
+            RuleFor(x => x.Name)
+                .NotEmpty().WithMessage("El nombre es obligatorio")
+                .MaximumLength(30).WithMessage("El nombre no puede superar los {MaxLength} caracteres");
+
+            RuleFor(x => x.Price)
+                .GreaterThanOrEqualTo(0).WithMessage("No se admiten valores negativos");
+
+            RuleFor(x => x.Description)
+                .MaximumLength(512).WithMessage("La descripción no puede superar los {MaxLength} caracteres");
+        }
     }
 }

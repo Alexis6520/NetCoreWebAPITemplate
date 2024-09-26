@@ -17,12 +17,12 @@ namespace Application.Services.Commands.Donuts.Update
         /// <summary>
         /// Nuevo nombre
         /// </summary>
-        public string Name { get; set; } = "";
+        public string Name { get; set; }
 
         /// <summary>
         /// Nueva descripción
         /// </summary>
-        public string? Description { get; set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// Nuevo precio
