@@ -1,5 +1,6 @@
 using Application.Services;
 using Host.Extensions;
+using Host.Middlewares;
 using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +22,7 @@ if (app.Environment.IsDevelopment())
     app.InitializeDatabase();
 }
 
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
