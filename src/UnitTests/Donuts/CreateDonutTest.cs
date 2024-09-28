@@ -7,6 +7,32 @@ namespace UnitTests.Donuts
     [TestClass]
     public class CreateDonutTest : BaseTest<CreateDonutHandler>
     {
+        #region "ValidationData"
+        public static IEnumerable<object[]> ValidationData =>
+        [
+            [new CreateDonutCommand()],
+            [new CreateDonutCommand() { Name=""}],
+            [new CreateDonutCommand() { Name=new string('a',31)}],
+            [new CreateDonutCommand() {
+                Name="Frambuesa",
+                Price=-0.0000001m
+            }],
+            [new CreateDonutCommand() {
+                Name="Frambuesa",
+                Description=new string('a',513)
+            }],
+        ];
+        #endregion
+
+        [TestMethod]
+        [DynamicData(nameof(ValidationData))]
+        public void ValidateCommand(CreateDonutCommand command)
+        {
+            var validator = new CreateDonutValidator();
+            var result = validator.Validate(command);
+            Assert.IsFalse(result.IsValid);
+        }
+
         [TestMethod]
         public async Task Create()
         {
