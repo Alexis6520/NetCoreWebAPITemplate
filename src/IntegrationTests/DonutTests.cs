@@ -17,6 +17,23 @@ namespace IntegrationTests
         {
             var command = new CreateDonutCommand
             {
+                Name = "Frambuesa",
+                Price = 19.99m,
+                Description = "Dona de frambuesa",
+            };
+
+            var id = await CreateDonut(command);
+            var donut = DbContext.Donuts.Find(id);
+            Assert.NotNull(donut);
+            Assert.Equal(donut.Name, command.Name);
+            Assert.Equal(donut.Price, command.Price);
+            Assert.Equal(donut.Description, command.Description);
+        }
+
+        private async Task<int> CreateDonut(CreateDonutCommand command = null)
+        {
+            command ??= new CreateDonutCommand
+            {
                 Name = "test",
                 Price = 10,
                 Description = "test",
@@ -27,11 +44,7 @@ namespace IntegrationTests
             var responseModel = await response.Content.ReadFromJsonAsync<Response<int>>();
             var id = responseModel.Value;
             _toDeleteIds.Add(id);
-            var donut = DbContext.Donuts.Find(id);
-            Assert.NotNull(donut);
-            Assert.Equal(donut.Name, command.Name);
-            Assert.Equal(donut.Price, command.Price);
-            Assert.Equal(donut.Description, command.Description);
+            return id;
         }
 
         [Fact]
@@ -39,13 +52,29 @@ namespace IntegrationTests
         {
             for (int i = 0; i < 3; i++)
             {
-                await Create();
+                await CreateDonut();
             }
 
             var responseModel = await Client.GetFromJsonAsync<Response<List<DonutListItemDTO>>>(BASE_URL);
             var list = responseModel.Value;
             Assert.NotNull(list);
             Assert.True(list.Count >= 3);
+        }
+
+        [Fact]
+        public async Task GetById()
+        {
+            var id = await CreateDonut();
+            var target = DbContext.Donuts.Find(id);
+            var url = $"{BASE_URL}/{target.Id}";
+            var response = await Client.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            var model = await response.Content.ReadFromJsonAsync<Response<DonutDTO>>();
+            var dto = model.Value;
+            Assert.NotNull(dto);
+            Assert.Equal(dto.Name, target.Name);
+            Assert.Equal(dto.Description, target.Description);
+            Assert.Equal(dto.Price, target.Price);
         }
 
         protected override void TestCleanUp()

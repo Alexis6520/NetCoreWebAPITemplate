@@ -6,7 +6,7 @@ namespace IntegrationTests.Abstractions
 {
     public abstract class BaseTest(CustomWebAppFactory factory) : IClassFixture<CustomWebAppFactory>, IDisposable
     {
-        private CustomWebAppFactory _factory = factory;
+        private readonly CustomWebAppFactory _factory = factory;
         private HttpClient _client;
         private ApplicationDbContext _dbContext;
         private IServiceScope _scope = factory.Services.CreateScope();
@@ -21,8 +21,6 @@ namespace IntegrationTests.Abstractions
         public void Dispose()
         {
             TestCleanUp();
-            _factory.Dispose();
-            _factory = null;
             _client.Dispose();
             _client = null;
             _dbContext?.Dispose();
