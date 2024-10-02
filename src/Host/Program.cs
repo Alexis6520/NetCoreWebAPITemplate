@@ -25,7 +25,7 @@ try
 
     var app = builder.Build();
 
-    if (app.Environment.IsDevelopment())
+    if (app.Environment.IsDevelopment() || app.Environment.IsTesting())
     {
         app.UseSwagger();
         app.UseSwaggerUI();
@@ -45,10 +45,12 @@ try
 }
 catch (Exception ex)
 {
-    logger.Fatal(ex,"Programa detenido por excepción");
-	throw;
+    logger.Fatal(ex, "Programa detenido por excepción");
+    throw;
 }
 finally
 {
     LogManager.Shutdown();
 }
+
+public partial class Program { }
