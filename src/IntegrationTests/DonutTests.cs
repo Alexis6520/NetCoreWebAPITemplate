@@ -5,6 +5,7 @@ using Application.Services.Wrappers;
 using IntegrationTests.Abstractions;
 using IntegrationTests.Services;
 using System.Net.Http.Json;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace IntegrationTests
 {
@@ -104,6 +105,17 @@ namespace IntegrationTests
             Assert.Equal(donut.Name, updateCommand.Name);
             Assert.Equal(donut.Price, updateCommand.Price);
             Assert.Equal(donut.Description, updateCommand.Description);
+        }
+
+        [Fact]
+        public async Task Delete()
+        {
+            var id = await CreateDonut();
+            var url = $"{BASE_URL}/{id}";
+            var response = await Client.DeleteAsync(url);
+            response.EnsureSuccessStatusCode();
+            var exists = DbContext.Donuts.Any(x => x.Id == id);
+            Assert.False(exists);
         }
 
         protected override void TestCleanUp()
