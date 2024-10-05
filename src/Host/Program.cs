@@ -36,7 +36,6 @@ try
     app.UseHttpsRedirection();
     app.UseAuthorization();
 
-    // needed for  ${aspnet-request-posted-body} with an API Controller.
     app.UseMiddleware<NLogRequestPostedBodyMiddleware>(
         new NLogRequestPostedBodyMiddlewareOptions());
 

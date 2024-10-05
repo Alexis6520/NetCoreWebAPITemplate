@@ -5,7 +5,6 @@ using Application.Services.Wrappers;
 using IntegrationTests.Abstractions;
 using IntegrationTests.Services;
 using System.Net.Http.Json;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace IntegrationTests
 {

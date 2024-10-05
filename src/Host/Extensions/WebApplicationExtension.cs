@@ -6,7 +6,7 @@ namespace Host.Extensions
     public static class WebApplicationExtension
     {
         /// <summary>
-        /// Inicializa la base de datos
+        /// Inicializa la base de datos (SÓLO PARA ENTORNOS DE DESARROLLO O DE PRUEBA)
         /// </summary>
         /// <param name="webApplication"></param>
         public static void InitializeDatabase(this WebApplication webApplication)
